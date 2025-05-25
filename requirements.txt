@@ -1,0 +1,4 @@
+colorama
+pyfiglet
+pyreadline3; platform_system == 'Windows'
+readline; platform_system != 'Windows'
