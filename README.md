@@ -33,7 +33,7 @@
 ### Installation
 
 ```bash
-git clone https://github.com/Gofaone315/ChaTerminal.git
+git clone https://github.com/Gofaone315/ChaTerminal
 cd ChaTerminal
 pip install -r requirements.txt
 ```
