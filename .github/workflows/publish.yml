@@ -1,9 +1,7 @@
 name: Build and Publish ChaTerminal to PyPI
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
