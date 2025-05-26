@@ -79,12 +79,12 @@ To let others join:
 
 ```bash
 # Start server
-$ python server.py
+$ ChaTerminal init server
 Port: 5555
 Admin Username: admin
 
 # Start client
-$ python client.py
+$ ChaTerminal init client
 Server IP: 192.168.1.100
 Server Port: 5555
 Username: myname
