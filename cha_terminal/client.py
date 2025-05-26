@@ -3,34 +3,18 @@ import threading
 import hashlib
 import readline
 import platform
-from crypto_utils import encrypt_msg, decrypt_msg
-from colorama import init, Fore, Style
 import time
 import sys
-import splash
-
-splash.splash()
-init(autoreset=True)
-
-SERVER = input("Server IP: ")
-PORT = int(input("Server Port: "))
-username = input("Username: ")
-
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-try:
-    client.connect((SERVER, PORT))
-    client.sendall(encrypt_msg(username))
-except Exception as e:
-    print(f"[!] Could not connect: {e}")
-    exit()
+from .crypto_utils import encrypt_msg, decrypt_msg
+from .splash import splash
+from colorama import init, Fore, Style
 
 COMMANDS = ["/dm", "/kick", "/list", "/me", "/rename", "/help"]
+client = None
+
 def completer(text, state):
     options = [cmd for cmd in COMMANDS if cmd.startswith(text)]
     return options[state] if state < len(options) else None
-
-readline.set_completer(completer)
-readline.parse_and_bind("tab: complete")
 
 def get_user_color(name):
     hash_val = int(hashlib.sha256(name.encode()).hexdigest(), 16)
@@ -55,9 +39,7 @@ def receive():
             if not msg:
                 print("\n[!] Server disconnected.")
                 break
-
             text = decrypt_msg(msg)
-
             if "[DM from" in text or "kicked" in text:
                 sound_alert()
 
@@ -96,5 +78,24 @@ def send():
         except:
             break
 
-threading.Thread(target=receive, daemon=True).start()
-send()
+def main():
+    global client
+    splash()
+    init(autoreset=True)
+    readline.set_completer(completer)
+    readline.parse_and_bind("tab: complete")
+
+    SERVER = input("Server IP: ")
+    PORT = int(input("Server Port: "))
+    username = input("Username: ")
+
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        client.connect((SERVER, PORT))
+        client.sendall(encrypt_msg(username))
+    except Exception as e:
+        print(f"[!] Could not connect: {e}")
+        return
+
+    threading.Thread(target=receive, daemon=True).start()
+    send()

@@ -33,15 +33,13 @@
 ### Installation
 
 ```bash
-git clone https://github.com/Gofaone315/ChaTerminal
-cd ChaTerminal
-pip install -r requirements.txt
+pip install ChaTerminal
 ```
 
 ### Running the Server
 
 ```bash
-python server.py
+ChaTerminal init server
 ```
 
 - Enter a port (e.g., `5555`) and the admin username
@@ -52,7 +50,7 @@ python server.py
 In a **new terminal window**:
 
 ```bash
-python client.py
+ChaTerminal init client
 ```
 
 - Enter the server IP, port, and a unique username

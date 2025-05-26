@@ -1,16 +1,14 @@
 import socket
 import threading
 from datetime import datetime
-from crypto_utils import encrypt_msg, decrypt_msg
-from splash import splash
+from .crypto_utils import encrypt_msg, decrypt_msg
+from .splash import splash
 
-splash()
 HOST = '0.0.0.0'
-PORT = int(input("Port: "))
-ADMIN_USERNAME = input("Admin Username: ")
-
-clients = {}     # socket: username
-usernames = {}   # username: socket
+PORT = None
+ADMIN_USERNAME = None
+clients = {}
+usernames = {}
 
 def broadcast(message, exclude_socket=None):
     for client in list(clients):
@@ -49,7 +47,6 @@ def handle_client(client):
                 break
             msg = decrypt_msg(raw)
             timestamp = datetime.now().strftime("[%H:%M]")
-            log_to_file(f"{timestamp} {username}: {msg}")
 
             if msg.startswith("/dm "):
                 _, to_user, *message = msg.split()
@@ -88,14 +85,14 @@ def handle_client(client):
 
             elif msg.startswith("/help"):
                 help_text = (
-                        "\033[1;36m[ChaTerminal Help Menu]\033[0m\n"
-                        "\033[1;33m/dm <user> <msg>\033[0m   - Send a private message\n"
-                        "\033[1;33m/kick <user>\033[0m       - Kick a user (admin only)\n"
-                        "\033[1;33m/list\033[0m              - List online users\n"
-                        "\033[1;33m/rename <newname>\033[0m  - Change your username\n"
-                        "\033[1;33m/me <action>\033[0m       - Perform an action\n"
-                        "\033[1;33m/help\033[0m              - Show this help menu\n"
-                    )
+                    "\033[1;36m[ChaTerminal Help Menu]\033[0m\n"
+                    "\033[1;33m/dm <user> <msg>\033[0m   - Send a private message\n"
+                    "\033[1;33m/kick <user>\033[0m       - Kick a user (admin only)\n"
+                    "\033[1;33m/list\033[0m              - List online users\n"
+                    "\033[1;33m/rename <newname>\033[0m  - Change your username\n"
+                    "\033[1;33m/me <action>\033[0m       - Perform an action\n"
+                    "\033[1;33m/help\033[0m              - Show this help menu\n"
+                )
                 client.sendall(encrypt_msg(help_text))
 
             else:
@@ -110,28 +107,31 @@ def get_local_ip():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
-        local_ip = s.getsockname()[0]
+        ip = s.getsockname()[0]
         s.close()
-        return local_ip
+        return ip
     except:
         return "Unavailable"
 
 def print_colored_box(lines, border_color="\033[96m", text_color="\033[97m"):
     reset = "\033[0m"
     width = max(len(line) for line in lines) + 4
-
     print(f"{border_color}┌{'─' * width}┐{reset}")
     for line in lines:
         print(f"{border_color}│{reset} {text_color}{line.ljust(width - 2)}{reset} {border_color}│{reset}")
     print(f"{border_color}└{'─' * width}┘{reset}")
 
 def main():
+    global PORT, ADMIN_USERNAME
+    splash()
+    PORT = int(input("Port: "))
+    ADMIN_USERNAME = input("Admin Username: ")
+
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((HOST, PORT))
     server.listen()
 
     local_ip = get_local_ip()
-
     info_lines = [
         f"ChaTerminal running on local IP: {local_ip}:{PORT}",
         "Other users on the same Wi-Fi/LAN can connect using this IP.",
@@ -143,12 +143,8 @@ def main():
         "",
         "Then share the public IP/URL and port with clients."
     ]
-
     print_colored_box(info_lines)
 
     while True:
         client_socket, addr = server.accept()
         threading.Thread(target=handle_client, args=(client_socket,), daemon=True).start()
-
-if __name__ == "__main__":
-    main()
