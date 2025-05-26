@@ -39,7 +39,7 @@ pip install ChaTerminal
 ### Running the Server
 
 ```bash
-ChaTerminal init server
+python -m ChaTerminal init server
 ```
 
 - Enter a port (e.g., `5555`) and the admin username
@@ -50,7 +50,7 @@ ChaTerminal init server
 In a **new terminal window**:
 
 ```bash
-ChaTerminal init client
+python -m ChaTerminal init client
 ```
 
 - Enter the server IP, port, and a unique username
@@ -79,12 +79,12 @@ To let others join:
 
 ```bash
 # Start server
-$ ChaTerminal init server
+$ python -m ChaTerminal init server
 Port: 5555
 Admin Username: admin
 
 # Start client
-$ ChaTerminal init client
+$ python -m ChaTerminal init client
 Server IP: 192.168.1.100
 Server Port: 5555
 Username: myname
