@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="ChaTerminal",
-    version="0.1.0",
+    version="0.0.1",
     author="Gofaone Tlalang",
     author_email="gofaonetlalang@gmail.com",
     description="A terminal-based encrypted chat system for LAN and remote connections",
