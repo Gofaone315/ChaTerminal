@@ -103,6 +103,13 @@ This project is licensed under the MIT License. See `LICENSE` for more info.
 **Gofaone Tlalang**  
 GitHub: [@Gofaone315](https://github.com/Gofaone315)
 
+## Contributors ✨
+
+Thanks goes to these wonderful people:
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ---
 
 **ChaTerminal** – Real-time encrypted chat, right from your terminal.
