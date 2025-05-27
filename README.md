@@ -107,8 +107,9 @@ GitHub: [@Gofaone315](https://github.com/Gofaone315)
 
 Thanks goes to these wonderful people:
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+<a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=Gofaone315/ChaTerminal"/>
+</a>
 
 ---
 
