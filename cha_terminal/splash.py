@@ -1,6 +1,12 @@
 import pyfiglet
 import time
+import subprocess
 import sys
+import os
+
+def clear_console():
+    command = 'cls' if os.name == 'nt' else 'clear'
+    subprocess.run(command, shell=True)
 
 def typewriter(text, delay=0.005, beep=False):
     for char in text:
@@ -13,6 +19,7 @@ def typewriter(text, delay=0.005, beep=False):
     print()
 
 def splash():
+    clear_console()
     banner = pyfiglet.figlet_format("ChaTerminal", font="slant")
     print("\033[1;32m", end="")  # Green
     typewriter(banner, delay=0.002, beep=True)

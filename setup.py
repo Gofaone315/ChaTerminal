@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="ChaTerminal",
-    version="1.0.1",
+    version="1.0.2",
     author="Gofaone Tlalang",
     author_email="gofaonetlalang@gmail.com",
     description="A terminal-based encrypted chat system for LAN and remote connections",
@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "chat=ChaTerminal.cli:main"
+            "ChaTerminal=ChaTerminal.cli:main"
         ]
     },
     classifiers=[
@@ -30,6 +30,7 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         "colorama",
-        "pyfiglet"
+        "pyfiglet",
+        "pyreadline3; platform_system=='windows'"
     ],
 )
